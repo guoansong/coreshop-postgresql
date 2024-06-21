@@ -1,0 +1,366 @@
+DO $$
+DECLARE row record;
+BEGIN
+  FOR row IN select 'ALTER TABLE '||'"'||tablename||'"'||' RENAME TO ' ||
+					lower(tablename)||';' as str from pg_tables where schemaname = 'public'
+  LOOP
+    EXECUTE format(row.str);  
+  END LOOP;
+END $$;
+
+
+===========
+
+select 'ALTER TABLE '||'"'||tablename||'"'||' RENAME TO ' ||
+lower(tablename)||';' from pg_tables where schemaname = 'public';
+psql -U username database
+
+DO $$
+DECLARE row record;
+BEGIN
+  FOR row IN SELECT table_schema,table_name,column_name
+             FROM information_schema.columns
+             WHERE table_schema = 'public' AND 
+             table_name   = 'table1'
+  LOOP
+    EXECUTE format('ALTER TABLE %I.%I RENAME COLUMN %I TO %I',
+      row.table_schema,row.table_name,row.column_name,lower(row.column_name));  
+  END LOOP;
+END $$;
+
+===
+SELECT TABLE_NAME,extra,COLUMN_NAME FROM information_schema. COLUMNS WHERE TABLE_SCHEMA = ‘数据库名’ and EXTRA = ‘auto_increment’;
+
+
+mysql> SELECT TABLE_NAME,extra,COLUMN_NAME FROM information_schema. COLUMNS WHERE TABLE_SCHEMA = 'test' and EXTRA = 'auto_increment'; 
++------------------------------------------+----------------+-------------+
+| TABLE_NAME                               | EXTRA          | COLUMN_NAME |
++------------------------------------------+----------------+-------------+
+| CoreCmsAdvertPosition                    | auto_increment | id          |
+| CoreCmsAdvertisement                     | auto_increment | id          |
+| CoreCmsAgent                             | auto_increment | id          |
+| CoreCmsAgentGoods                        | auto_increment | id          |
+| CoreCmsAgentGrade                        | auto_increment | id          |
+| CoreCmsAgentOrder                        | auto_increment | id          |
+| CoreCmsAgentProducts                     | auto_increment | id          |
+| CoreCmsApiAccessToken                    | auto_increment | id          |
+| CoreCmsArea                              | auto_increment | id          |
+| CoreCmsArticle                           | auto_increment | id          |
+| CoreCmsArticleType                       | auto_increment | id          |
+| CoreCmsBillAftersalesItem                | auto_increment | id          |
+| CoreCmsBillDeliveryItem                  | auto_increment | id          |
+| CoreCmsBillReshipItem                    | auto_increment | id          |
+| CoreCmsBrand                             | auto_increment | id          |
+| CoreCmsCart                              | auto_increment | id          |
+| CoreCmsClerk                             | auto_increment | id          |
+| CoreCmsCoupon                            | auto_increment | id          |
+| CoreCmsDistribution                      | auto_increment | id          |
+| CoreCmsDistributionCondition             | auto_increment | id          |
+| CoreCmsDistributionGrade                 | auto_increment | id          |
+| CoreCmsDistributionOrder                 | auto_increment | id          |
+| CoreCmsDistributionResult                | auto_increment | id          |
+| CoreCmsForm                              | auto_increment | id          |
+| CoreCmsFormItem                          | auto_increment | id          |
+| CoreCmsFormSubmit                        | auto_increment | id          |
+| CoreCmsFormSubmitDetail                  | auto_increment | id          |
+| CoreCmsGoods                             | auto_increment | id          |
+| CoreCmsGoodsBrowsing                     | auto_increment | id          |
+| CoreCmsGoodsCategory                     | auto_increment | id          |
+| CoreCmsGoodsCategoryExtend               | auto_increment | id          |
+| CoreCmsGoodsCollection                   | auto_increment | id          |
+| CoreCmsGoodsComment                      | auto_increment | id          |
+| CoreCmsGoodsGrade                        | auto_increment | id          |
+| CoreCmsGoodsParams                       | auto_increment | id          |
+| CoreCmsGoodsTypeSpec                     | auto_increment | id          |
+| CoreCmsGoodsTypeSpecValue                | auto_increment | id          |
+| CoreCmsInvoice                           | auto_increment | id          |
+| CoreCmsInvoiceRecord                     | auto_increment | id          |
+| CoreCmsLabel                             | auto_increment | id          |
+| CoreCmsLoginLog                          | auto_increment | id          |
+| CoreCmsLogistics                         | auto_increment | id          |
+| CoreCmsMessage                           | auto_increment | id          |
+| CoreCmsMessageCenter                     | auto_increment | id          |
+| CoreCmsNotice                            | auto_increment | id          |
+| CoreCmsOrderItem                         | auto_increment | id          |
+| CoreCmsOrderLog                          | auto_increment | id          |
+| CoreCmsPages                             | auto_increment | id          |
+| CoreCmsPagesItems                        | auto_increment | id          |
+| CoreCmsPayments                          | auto_increment | id          |
+| CoreCmsPinTuanRecord                     | auto_increment | id          |
+| CoreCmsPinTuanRule                       | auto_increment | id          |
+| CoreCmsProducts                          | auto_increment | id          |
+| CoreCmsProductsDistribution              | auto_increment | id          |
+| CoreCmsPromotion                         | auto_increment | id          |
+| CoreCmsPromotionCondition                | auto_increment | id          |
+| CoreCmsPromotionRecord                   | auto_increment | id          |
+| CoreCmsPromotionResult                   | auto_increment | id          |
+| CoreCmsServiceDescription                | auto_increment | id          |
+| CoreCmsServices                          | auto_increment | id          |
+| CoreCmsShip                              | auto_increment | id          |
+| CoreCmsSms                               | auto_increment | id          |
+| CoreCmsStockLog                          | auto_increment | id          |
+| CoreCmsStore                             | auto_increment | id          |
+| CoreCmsUser                              | auto_increment | id          |
+| CoreCmsUserBalance                       | auto_increment | id          |
+| CoreCmsUserBankCard                      | auto_increment | id          |
+| CoreCmsUserGrade                         | auto_increment | id          |
+| CoreCmsUserLog                           | auto_increment | id          |
+| CoreCmsUserPointLog                      | auto_increment | id          |
+| CoreCmsUserServicesOrder                 | auto_increment | id          |
+| CoreCmsUserServicesTicket                | auto_increment | id          |
+| CoreCmsUserServicesTicketVerificationLog | auto_increment | id          |
+| CoreCmsUserShip                          | auto_increment | id          |
+| CoreCmsUserTocash                        | auto_increment | id          |
+| CoreCmsUserWeChatInfo                    | auto_increment | id          |
+| CoreCmsUserWeChatMsgSubscription         | auto_increment | id          |
+| CoreCmsUserWeChatMsgSubscriptionSwitch   | auto_increment | id          |
+| CoreCmsUserWeChatMsgTemplate             | auto_increment | id          |
+| CoreCmsWeixinAuthor                      | auto_increment | id          |
+| CoreCmsWeixinMediaMessage                | auto_increment | id          |
+| CoreCmsWeixinMenu                        | auto_increment | id          |
+| CoreCmsWeixinMessage                     | auto_increment | id          |
+| SysDictionary                            | auto_increment | id          |
+| SysDictionaryData                        | auto_increment | id          |
+| SysLoginRecord                           | auto_increment | id          |
+| SysMenu                                  | auto_increment | id          |
+| SysNLogRecords                           | auto_increment | id          |
+| SysOperRecord                            | auto_increment | id          |
+| SysOrganization                          | auto_increment | id          |
+| SysRole                                  | auto_increment | id          |
+| SysRoleMenu                              | auto_increment | id          |
+| SysTaskLog                               | auto_increment | id          |
+| SysUser                                  | auto_increment | id          |
+| SysUserRole                              | auto_increment | id          |
+| WeChatAccessToken                        | auto_increment | id          |
++------------------------------------------+----------------+-------------+
+96 rows in set (0.01 sec)
+
+https://blog.csdn.net/zhangcongyi420/article/details/127343568
+===
+
+select * from information_schema.sequences where sequence_schema = 'public';
+
+SELECT setval('table_id_seq', (SELECT MAX(id) FROM table));
+
+
+
+SELECT table_name,column_name
+             FROM information_schema.columns
+             WHERE table_schema = 'public' AND column_name = 'id'
+			 
+			 
+alter table 
+	sysnlogrecords 
+alter column 
+	id  
+set default nextval(
+	'seq_sysnlogrecords_id'  
+);
+
+=====
+
+SELECT TABLE_NAME,extra,COLUMN_NAME, COLUMN_TYPE  FROM information_schema. COLUMNS WHERE TABLE_SCHEMA = 'test' and COLUMN_TYPE = 'text'; 
++---------------------------+-------+-------------------+-------------+
+| TABLE_NAME                | EXTRA | COLUMN_NAME       | COLUMN_TYPE |
++---------------------------+-------+-------------------+-------------+
+| CoreCmsAdvertisement      |       | valDes            | text        |
+| CoreCmsApiAccessToken     |       | parameters        | text        |
+| CoreCmsBillAftersalesItem |       | addon             | text        |
+| CoreCmsBillDelivery       |       | logiInformation   | text        |
+| CoreCmsBillDeliveryItem   |       | addon             | text        |
+| CoreCmsBillRefund         |       | memo              | text        |
+| CoreCmsBillReshipItem     |       | addon             | text        |
+| CoreCmsDistributionResult |       | parameters        | text        |
+| CoreCmsForm               |       | images            | text        |
+| CoreCmsFormSubmitDetail   |       | formItemValue     | text        |
+| CoreCmsGoods              |       | images            | text        |
+| CoreCmsGoods              |       | intro             | text        |
+| CoreCmsGoods              |       | spesDesc          | text        |
+| CoreCmsGoods              |       | parameters        | text        |
+| CoreCmsGoods              |       | newSpec           | text        |
+| CoreCmsGoodsComment       |       | addon             | text        |
+| CoreCmsGoodsComment       |       | images            | text        |
+| CoreCmsGoodsComment       |       | sellerContent     | text        |
+| CoreCmsGoodsParams        |       | value             | text        |
+| CoreCmsMessage            |       | parameters        | text        |
+| CoreCmsOrder              |       | coupon            | text        |
+| CoreCmsOrderItem          |       | addon             | text        |
+| CoreCmsOrderLog           |       | data              | text        |
+| CoreCmsPagesItems         |       | parameters        | text        |
+| CoreCmsPayments           |       | parameters        | text        |
+| CoreCmsProducts           |       | spesDesc          | text        |
+| CoreCmsProducts           |       | images            | text        |
+| CoreCmsPromotion          |       | parameters        | text        |
+| CoreCmsPromotionCondition |       | parameters        | text        |
+| CoreCmsPromotionResult    |       | parameters        | text        |
+| CoreCmsSetting            |       | sValue            | text        |
+| CoreCmsShip               |       | exp               | text        |
+| CoreCmsShip               |       | areaFee           | text        |
+| CoreCmsSms                |       | parameters        | text        |
+| CoreCmsWeixinAuthor       |       | signature         | text        |
+| CoreCmsWeixinAuthor       |       | businessInfo      | text        |
+| CoreCmsWeixinAuthor       |       | authorizationInfo | text        |
+| CoreCmsWeixinAuthor       |       | miniprograminfo   | text        |
+| CoreCmsWeixinAuthor       |       | funcInfo          | text        |
+| CoreCmsWeixinMenu         |       | parameters        | text        |
+| CoreCmsWeixinMessage      |       | parameters        | text        |
+| SysNLogRecords            |       | Message           | text        |
+| SysNLogRecords            |       | Exception         | text        |
+| SysOperRecord             |       | param             | text        |
+| SysOperRecord             |       | result            | text        |
+| SysTaskLog                |       | parameters        | text        |
++---------------------------+-------+-------------------+-------------+
+46 rows in set (0.00 sec)
+
+
+==============
+ALTER TABLE 		CoreCmsAdvertisement			 ALTER COLUMN 		valDes		type text;
+ALTER TABLE 		CoreCmsApiAccessToken			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsBillAftersalesItem			 ALTER COLUMN 		addon		type text;
+ALTER TABLE 		CoreCmsBillDelivery			 ALTER COLUMN 		logiInformation		type text;
+ALTER TABLE 		CoreCmsBillDeliveryItem			 ALTER COLUMN 		addon		type text;
+ALTER TABLE 		CoreCmsBillRefund			 ALTER COLUMN 		memo		type text;
+ALTER TABLE 		CoreCmsBillReshipItem			 ALTER COLUMN 		addon		type text;
+ALTER TABLE 		CoreCmsDistributionResult			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsForm			 ALTER COLUMN 		images		type text;
+ALTER TABLE 		CoreCmsFormSubmitDetail			 ALTER COLUMN 		formItemValue		type text;
+ALTER TABLE 		CoreCmsGoods			 ALTER COLUMN 		images		type text;
+ALTER TABLE 		CoreCmsGoods			 ALTER COLUMN 		intro		type text;
+ALTER TABLE 		CoreCmsGoods			 ALTER COLUMN 		spesDesc		type text;
+ALTER TABLE 		CoreCmsGoods			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsGoods			 ALTER COLUMN 		newSpec		type text;
+ALTER TABLE 		CoreCmsGoodsComment			 ALTER COLUMN 		addon		type text;
+ALTER TABLE 		CoreCmsGoodsComment			 ALTER COLUMN 		images		type text;
+ALTER TABLE 		CoreCmsGoodsComment			 ALTER COLUMN 		sellerContent		type text;
+ALTER TABLE 		CoreCmsGoodsParams			 ALTER COLUMN 		value		type text;
+ALTER TABLE 		CoreCmsMessage			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsOrder			 ALTER COLUMN 		coupon		type text;
+ALTER TABLE 		CoreCmsOrderItem			 ALTER COLUMN 		addon		type text;
+ALTER TABLE 		CoreCmsOrderLog			 ALTER COLUMN 		data		type text;
+ALTER TABLE 		CoreCmsPagesItems			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsPayments			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsProducts			 ALTER COLUMN 		spesDesc		type text;
+ALTER TABLE 		CoreCmsProducts			 ALTER COLUMN 		images		type text;
+ALTER TABLE 		CoreCmsPromotion			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsPromotionCondition			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsPromotionResult			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsSetting			 ALTER COLUMN 		sValue		type text;
+ALTER TABLE 		CoreCmsShip			 ALTER COLUMN 		exp		type text;
+ALTER TABLE 		CoreCmsShip			 ALTER COLUMN 		areaFee		type text;
+ALTER TABLE 		CoreCmsSms			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsWeixinAuthor			 ALTER COLUMN 		signature		type text;
+ALTER TABLE 		CoreCmsWeixinAuthor			 ALTER COLUMN 		businessInfo		type text;
+ALTER TABLE 		CoreCmsWeixinAuthor			 ALTER COLUMN 		authorizationInfo		type text;
+ALTER TABLE 		CoreCmsWeixinAuthor			 ALTER COLUMN 		miniprograminfo		type text;
+ALTER TABLE 		CoreCmsWeixinAuthor			 ALTER COLUMN 		funcInfo		type text;
+ALTER TABLE 		CoreCmsWeixinMenu			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		CoreCmsWeixinMessage			 ALTER COLUMN 		parameters		type text;
+ALTER TABLE 		SysNLogRecords			 ALTER COLUMN 		Message		type text;
+ALTER TABLE 		SysNLogRecords			 ALTER COLUMN 		Exception		type text;
+ALTER TABLE 		SysOperRecord			 ALTER COLUMN 		param		type text;
+ALTER TABLE 		SysOperRecord			 ALTER COLUMN 		result		type text;
+ALTER TABLE 		SysTaskLog			 ALTER COLUMN 		parameters		type text;
+==================
+
+SELECT setval('corecmsadvertisement_id_seq', (SELECT MAX(id) FROM corecmsadvertisement));
+SELECT setval('corecmsadvertposition_id_seq', (SELECT MAX(id) FROM corecmsadvertposition));
+SELECT setval('corecmsagent_id_seq', (SELECT MAX(id) FROM corecmsagent));
+SELECT setval('corecmsagentgoods_id_seq', (SELECT MAX(id) FROM corecmsagentgoods));
+SELECT setval('corecmsagentgrade_id_seq', (SELECT MAX(id) FROM corecmsagentgrade));
+SELECT setval('corecmsagentorder_id_seq', (SELECT MAX(id) FROM corecmsagentorder));
+SELECT setval('corecmsagentproducts_id_seq', (SELECT MAX(id) FROM corecmsagentproducts));
+SELECT setval('corecmsapiaccesstoken_id_seq', (SELECT MAX(id) FROM corecmsapiaccesstoken));
+SELECT setval('corecmsarea_id_seq', (SELECT MAX(id) FROM corecmsarea));
+SELECT setval('corecmsarticle_id_seq', (SELECT MAX(id) FROM corecmsarticle));
+SELECT setval('corecmsarticletype_id_seq', (SELECT MAX(id) FROM corecmsarticletype));
+SELECT setval('corecmsbillaftersalesitem_id_seq', (SELECT MAX(id) FROM corecmsbillaftersalesitem));
+SELECT setval('corecmsbilldeliveryitem_id_seq', (SELECT MAX(id) FROM corecmsbilldeliveryitem));
+SELECT setval('corecmsbillreshipitem_id_seq', (SELECT MAX(id) FROM corecmsbillreshipitem));
+SELECT setval('corecmsbrand_id_seq', (SELECT MAX(id) FROM corecmsbrand));
+SELECT setval('corecmscart_id_seq', (SELECT MAX(id) FROM corecmscart));
+SELECT setval('corecmsclerk_id_seq', (SELECT MAX(id) FROM corecmsclerk));
+SELECT setval('corecmscoupon_id_seq', (SELECT MAX(id) FROM corecmscoupon));
+SELECT setval('corecmsdistribution_id_seq', (SELECT MAX(id) FROM corecmsdistribution));
+SELECT setval('corecmsdistributioncondition_id_seq', (SELECT MAX(id) FROM corecmsdistributioncondition));
+SELECT setval('corecmsdistributiongrade_id_seq', (SELECT MAX(id) FROM corecmsdistributiongrade));
+SELECT setval('corecmsdistributionorder_id_seq', (SELECT MAX(id) FROM corecmsdistributionorder));
+SELECT setval('corecmsdistributionresult_id_seq', (SELECT MAX(id) FROM corecmsdistributionresult));
+SELECT setval('corecmsform_id_seq', (SELECT MAX(id) FROM corecmsform));
+SELECT setval('corecmsformitem_id_seq', (SELECT MAX(id) FROM corecmsformitem));
+SELECT setval('corecmsformsubmit_id_seq', (SELECT MAX(id) FROM corecmsformsubmit));
+SELECT setval('corecmsformsubmitdetail_id_seq', (SELECT MAX(id) FROM corecmsformsubmitdetail));
+SELECT setval('corecmsgoods_id_seq', (SELECT MAX(id) FROM corecmsgoods));
+SELECT setval('corecmsgoodsbrowsing_id_seq', (SELECT MAX(id) FROM corecmsgoodsbrowsing));
+SELECT setval('corecmsgoodscategory_id_seq', (SELECT MAX(id) FROM corecmsgoodscategory));
+SELECT setval('corecmsgoodscategoryextend_id_seq', (SELECT MAX(id) FROM corecmsgoodscategoryextend));
+SELECT setval('corecmsgoodscollection_id_seq', (SELECT MAX(id) FROM corecmsgoodscollection));
+SELECT setval('corecmsgoodscomment_id_seq', (SELECT MAX(id) FROM corecmsgoodscomment));
+SELECT setval('corecmsgoodsgrade_id_seq', (SELECT MAX(id) FROM corecmsgoodsgrade));
+SELECT setval('corecmsgoodsparams_id_seq', (SELECT MAX(id) FROM corecmsgoodsparams));
+SELECT setval('corecmsgoodstypespec_id_seq', (SELECT MAX(id) FROM corecmsgoodstypespec));
+SELECT setval('corecmsgoodstypespecvalue_id_seq', (SELECT MAX(id) FROM corecmsgoodstypespecvalue));
+SELECT setval('corecmsinvoice_id_seq', (SELECT MAX(id) FROM corecmsinvoice));
+SELECT setval('corecmsinvoicerecord_id_seq', (SELECT MAX(id) FROM corecmsinvoicerecord));
+SELECT setval('corecmslabel_id_seq', (SELECT MAX(id) FROM corecmslabel));
+SELECT setval('corecmsloginlog_id_seq', (SELECT MAX(id) FROM corecmsloginlog));
+SELECT setval('corecmslogistics_id_seq', (SELECT MAX(id) FROM corecmslogistics));
+SELECT setval('corecmsmessage_id_seq', (SELECT MAX(id) FROM corecmsmessage));
+SELECT setval('corecmsmessagecenter_id_seq', (SELECT MAX(id) FROM corecmsmessagecenter));
+SELECT setval('corecmsnotice_id_seq', (SELECT MAX(id) FROM corecmsnotice));
+SELECT setval('corecmsorderitem_id_seq', (SELECT MAX(id) FROM corecmsorderitem));
+SELECT setval('corecmsorderlog_id_seq', (SELECT MAX(id) FROM corecmsorderlog));
+SELECT setval('corecmspages_id_seq', (SELECT MAX(id) FROM corecmspages));
+SELECT setval('corecmspagesitems_id_seq', (SELECT MAX(id) FROM corecmspagesitems));
+SELECT setval('corecmspayments_id_seq', (SELECT MAX(id) FROM corecmspayments));
+SELECT setval('corecmspintuanrecord_id_seq', (SELECT MAX(id) FROM corecmspintuanrecord));
+SELECT setval('corecmspintuanrule_id_seq', (SELECT MAX(id) FROM corecmspintuanrule));
+SELECT setval('corecmsproducts_id_seq', (SELECT MAX(id) FROM corecmsproducts));
+SELECT setval('corecmsproductsdistribution_id_seq', (SELECT MAX(id) FROM corecmsproductsdistribution));
+SELECT setval('corecmspromotion_id_seq', (SELECT MAX(id) FROM corecmspromotion));
+SELECT setval('corecmspromotioncondition_id_seq', (SELECT MAX(id) FROM corecmspromotioncondition));
+SELECT setval('corecmspromotionrecord_id_seq', (SELECT MAX(id) FROM corecmspromotionrecord));
+SELECT setval('corecmspromotionresult_id_seq', (SELECT MAX(id) FROM corecmspromotionresult));
+SELECT setval('corecmsservicedescription_id_seq', (SELECT MAX(id) FROM corecmsservicedescription));
+SELECT setval('corecmsservices_id_seq', (SELECT MAX(id) FROM corecmsservices));
+SELECT setval('corecmsship_id_seq', (SELECT MAX(id) FROM corecmsship));
+SELECT setval('corecmssms_id_seq', (SELECT MAX(id) FROM corecmssms));
+SELECT setval('corecmsstocklog_id_seq', (SELECT MAX(id) FROM corecmsstocklog));
+SELECT setval('corecmsstore_id_seq', (SELECT MAX(id) FROM corecmsstore));
+SELECT setval('corecmsuser_id_seq', (SELECT MAX(id) FROM corecmsuser));
+SELECT setval('corecmsuserbalance_id_seq', (SELECT MAX(id) FROM corecmsuserbalance));
+SELECT setval('corecmsuserbankcard_id_seq', (SELECT MAX(id) FROM corecmsuserbankcard));
+SELECT setval('corecmsusergrade_id_seq', (SELECT MAX(id) FROM corecmsusergrade));
+SELECT setval('corecmsuserlog_id_seq', (SELECT MAX(id) FROM corecmsuserlog));
+SELECT setval('corecmsuserpointlog_id_seq', (SELECT MAX(id) FROM corecmsuserpointlog));
+SELECT setval('corecmsuserservicesorder_id_seq', (SELECT MAX(id) FROM corecmsuserservicesorder));
+SELECT setval('corecmsuserservicesticket_id_seq', (SELECT MAX(id) FROM corecmsuserservicesticket));
+SELECT setval('corecmsuserservicesticketverificationlog_id_seq', (SELECT MAX(id) FROM corecmsuserservicesticketverificationlog));
+SELECT setval('corecmsusership_id_seq', (SELECT MAX(id) FROM corecmsusership));
+SELECT setval('corecmsusertocash_id_seq', (SELECT MAX(id) FROM corecmsusertocash));
+SELECT setval('corecmsuserwechatinfo_id_seq', (SELECT MAX(id) FROM corecmsuserwechatinfo));
+SELECT setval('corecmsuserwechatmsgsubscription_id_seq', (SELECT MAX(id) FROM corecmsuserwechatmsgsubscription));
+SELECT setval('corecmsuserwechatmsgsubscriptionswitch_id_seq', (SELECT MAX(id) FROM corecmsuserwechatmsgsubscriptionswitch));
+SELECT setval('corecmsuserwechatmsgtemplate_id_seq', (SELECT MAX(id) FROM corecmsuserwechatmsgtemplate));
+SELECT setval('corecmsweixinauthor_id_seq', (SELECT MAX(id) FROM corecmsweixinauthor));
+SELECT setval('corecmsweixinmediamessage_id_seq', (SELECT MAX(id) FROM corecmsweixinmediamessage));
+SELECT setval('corecmsweixinmenu_id_seq', (SELECT MAX(id) FROM corecmsweixinmenu));
+SELECT setval('corecmsweixinmessage_id_seq', (SELECT MAX(id) FROM corecmsweixinmessage));
+SELECT setval('sysdictionary_id_seq', (SELECT MAX(id) FROM sysdictionary));
+SELECT setval('sysdictionarydata_id_seq', (SELECT MAX(id) FROM sysdictionarydata));
+SELECT setval('sysloginrecord_id_seq', (SELECT MAX(id) FROM sysloginrecord));
+SELECT setval('sysmenu_id_seq', (SELECT MAX(id) FROM sysmenu));
+SELECT setval('sysnlogrecords_id_seq', (SELECT MAX(id) FROM sysnlogrecords));
+SELECT setval('sysoperrecord_id_seq', (SELECT MAX(id) FROM sysoperrecord));
+SELECT setval('sysorganization_id_seq', (SELECT MAX(id) FROM sysorganization));
+SELECT setval('sysrole_id_seq', (SELECT MAX(id) FROM sysrole));
+SELECT setval('sysrolemenu_id_seq', (SELECT MAX(id) FROM sysrolemenu));
+SELECT setval('systasklog_id_seq', (SELECT MAX(id) FROM systasklog));
+SELECT setval('sysuser_id_seq', (SELECT MAX(id) FROM sysuser));
+SELECT setval('sysuserrole_id_seq', (SELECT MAX(id) FROM sysuserrole));
+SELECT setval('wechataccesstoken_id_seq', (SELECT MAX(id) FROM wechataccesstoken));
+
+===========
+
+pg_dump.exe -U postgres -d coreshop -f d:\\coreshop.sql -p 5433
+psql -d coreshop -U postgres -f d:\\coreshop.sql
+
